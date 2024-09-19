@@ -26,7 +26,7 @@ r = Rake(
 )
 
 
-def extract_keywords(title, content):
+def extract_keywords_rake(title, content):
     # Rake를 이용해 키워드 추출
     r.extract_keywords_from_text(content)
     keywords_result = r.get_ranked_phrases_with_scores()
