@@ -1,5 +1,6 @@
-from src.word_extract_rake import extract_keywords_rake, print_result
+# from src.word_extract_rake import extract_keywords_rake, print_result
 from src.word_extract_krwordrank import extract_keywords_krwordrank
+from src.word_to_vector import get_weighted_vector
 
 # 예시 기사
 title = "한국 경제 위기설, 진실은?"
@@ -18,7 +19,10 @@ if __name__ == "__main__":
     # keywords_result = extract_keywords(title, content)
 
     # 키워드 추출 - krwordrank
-    extract_keywords_krwordrank(sentence_list)
+    keywords = extract_keywords_krwordrank(sentence_list)
+
+    # 키워드와 카테고리를 이용하여 벡터화
+    get_weighted_vector("경제", keywords)
 
 
 
