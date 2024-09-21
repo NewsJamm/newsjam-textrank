@@ -23,13 +23,13 @@ def get_weighted_vector(categorie, keywords, category_weight=1.5):
 
     avg_vector = np.mean(combined_vectors, axis=0)
 
-    # 벡터 시각화
-    plt.figure(figsize=(10, 6))
-    plt.bar(range(len(avg_vector)), avg_vector)
-    plt.title('Weighted Average Vector (Categories + Keywords with Category Weight = 1.5)')
-    plt.xlabel('Vector Dimension')
-    plt.ylabel('Value')
-    plt.show()
+    # # 벡터 시각화
+    # plt.figure(figsize=(10, 6))
+    # plt.bar(range(len(avg_vector)), avg_vector)
+    # plt.title('Weighted Average Vector (Categories + Keywords with Category Weight = 1.5)')
+    # plt.xlabel('Vector Dimension')
+    # plt.ylabel('Value')
+    # plt.show()
 
     return avg_vector
 
