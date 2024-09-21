@@ -1,4 +1,6 @@
+import kss
 from krwordrank.word import KRWordRank
+
 
 
 # 단어가 최소로 나와야 하는 빈도 수
@@ -7,12 +9,14 @@ min_count = 2
 # 단어의 최대 길이
 max_length = 10
 
-def extract_keywords_krwordrank(sentence_list):
+def extract_keywords_krwordrank(title, content):
+    full_content = title + " " + content
+    sentence_list = kss.split_sentences(full_content)
     wordrank_extractor = KRWordRank(min_count, max_length)
     keywords, rank, graph = KRWordRank.extract(self=wordrank_extractor, docs=sentence_list)
 
     # 키워드, 점수 출력
-    print_keywords(keywords)
+    # print_keywords(keywords)
     return keywords
 
 
