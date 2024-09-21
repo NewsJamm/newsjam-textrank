@@ -12,12 +12,11 @@ max_length = 10
 def extract_keywords_krwordrank(title, content):
     full_content = title + " " + content
     sentence_list = kss.split_sentences(full_content)
-    print(sentence_list)
     wordrank_extractor = KRWordRank(min_count, max_length)
     keywords, rank, graph = KRWordRank.extract(self=wordrank_extractor, docs=sentence_list)
 
     # 키워드, 점수 출력
-    print_keywords(keywords)
+    # print_keywords(keywords)
     return keywords
 
 
