@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"  # pip, npm 등 사용할 패키지 관리자
+    directory: "/"           # 프로젝트 루트 경로
+    schedule:
+      interval: "weekly"      # 업데이트 주기 (daily, weekly, monthly 중 선택)
