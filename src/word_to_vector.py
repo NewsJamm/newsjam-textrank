@@ -11,7 +11,7 @@ def get_weighted_vector(categorie, keywords, category_weight=1.5):
     # 카테고리 가중치를 적용하여 벡터화
     category_vectors = model[categorie] * category_weight
 
-    keyword_vectors = [model[word[0]] for word in sorted(keywords.items(), key=lambda x: x[1], reverse=True)[:5] if word[0] in model]
+    keyword_vectors = [model[word] for word in keywords if word in model]
 
     combined_vectors = category_vectors + keyword_vectors
 
