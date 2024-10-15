@@ -10,7 +10,7 @@ from typing import List, Optional
 app = FastAPI(title="키워드 추출 및 벡터 저장 API")
 
 # Pydantic 모델 정의
-class SaveNewRequest(BaseModel):
+class SaveNewsRequest(BaseModel):
     news_title: Optional[str] = ""
     news_content: str
     category: str
@@ -57,7 +57,7 @@ sentence_list = ["한국 경제 위기설, 진실은?", "최근 한국 경제가
 
 
 @app.post("/api/news", response_model=SaveNewsResponse)
-def save_news(data: SaveNewRequest):
+def save_news(data: SaveNewsRequest):
     # 모델이 아직 로드되지 않은 경우
     if w2v_model is None:
         raise HTTPException(status_code=500, detail="모델이 로드되지 않았습니다.")
@@ -84,9 +84,6 @@ def save_news(data: SaveNewRequest):
     }
 
     return response
-
-
-
 
 
 
