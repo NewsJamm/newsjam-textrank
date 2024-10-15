@@ -15,13 +15,13 @@ class SaveNewsRequest(BaseModel):
     news_content: str
     category: str
 
-class ExtractKeywordReponse(BaseModel):
+class ExtractKeywordResponse(BaseModel):
     word: str
     score: float
 
 class SaveNewsResponse(BaseModel):
     vector_idx: int
-    keywords: List[ExtractKeywordReponse]
+    keywords: List[ExtractKeywordResponse]
 
 
 
@@ -66,7 +66,7 @@ def save_news(data: SaveNewsRequest):
 
     sort_keywords = sorted(keywords.items(), key=lambda x: x[1], reverse=True)[:5]
 
-    response_keywords = [ExtractKeywordReponse(word = keyword[0], score = keyword[1]) for keyword in sort_keywords]
+    response_keywords = [ExtractKeywordResponse(word = keyword[0], score = keyword[1]) for keyword in sort_keywords]
 
     top_keywords_word = [item[0] for item in sort_keywords]
 
