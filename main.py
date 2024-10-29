@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-
+from pytrends.request import TrendReq
 # from src.word_extract_rake import extract_keywords_rake, print_result
 from src.word_extract_krwordrank import extract_keywords_krwordrank
 from src.word_to_vector import get_weighted_vector, model as w2v_model
@@ -86,6 +86,18 @@ def save_news(data: SaveNewsRequest):
     return response
 
 
+@app.get("/api/keyword")
+async def get_trending_keywords():
+    # pytrends 객체 초기화
+    pytrends = TrendReq(hl='ko', tz=540)
+
+    # 한국의 트렌드 검색어 가져오기
+    trending_searches_df = pytrends.trending_searches(pn='south_korea')
+
+    # 키워드만 배열로 추출
+    trending_keywords = trending_searches_df[0].tolist()
+
+    return {"trending_keywords": trending_keywords}
 
 
 
