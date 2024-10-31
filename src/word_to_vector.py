@@ -9,11 +9,11 @@ model = KeyedVectors.load_word2vec_format(fname="./src/model/output.tsv", binary
 
 def get_weighted_vector(categorie, keywords, category_weight=1.5):
     # 카테고리 가중치를 적용하여 벡터화
-    category_vectors = model[categorie] * category_weight
+    category_vector = model[categorie] * category_weight
 
     keyword_vectors = [model[word] for word in keywords if word in model]
 
-    combined_vectors = category_vectors + keyword_vectors
+    combined_vectors = [category_vector] + keyword_vectors
 
 
 
