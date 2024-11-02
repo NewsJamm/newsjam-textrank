@@ -7,13 +7,10 @@ from gensim.models import KeyedVectors
 model = KeyedVectors.load_word2vec_format(fname="./src/model/output.tsv", binary=False, encoding="utf-8")
 
 
-def get_weighted_vector(categorie, keywords, category_weight=1.5):
+def get_weighted_vector(categorie, keywords):
     # 카테고리 가중치를 적용하여 벡터화
-    category_vector = model[categorie] * category_weight
 
-    keyword_vectors = [model[word] for word in keywords if word in model]
-
-    combined_vectors = [category_vector] + keyword_vectors
+    combined_vectors = [model[word] for word in keywords if word in model]
 
 
 

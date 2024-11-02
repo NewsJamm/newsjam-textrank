@@ -12,7 +12,7 @@ def save_vector(avg_vector):
 
     index.add(avg_vector)
 
-    return index.ntotal
+    return index.ntotal - 1
 
 def find_recommand_news_vectors(faiss_index, recommend_count):
     # 입력받은 FAISS 인덱스에 해당하는 벡터 가져오기
@@ -22,4 +22,4 @@ def find_recommand_news_vectors(faiss_index, recommend_count):
     distances, indices = index.search(input_vector, recommend_count)
 
     # 가까운 이웃의 인덱스와 거리 반환
-    return indices[0], distances[0]
+    return indices[0].tolist(), distances[0].tolist()

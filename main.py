@@ -4,7 +4,7 @@ from pytrends.request import TrendReq
 # from src.word_extract_rake import extract_keywords_rake, print_result
 from src.word_extract_krwordrank import extract_keywords_krwordrank
 from src.word_to_vector import get_weighted_vector, model as w2v_model
-from src.model.save_vector import save_vector
+from src.model.save_vector import save_vector, find_recommand_news_vectors
 from typing import List, Optional
 
 app = FastAPI(title="키워드 추출 및 벡터 저장 API")
@@ -23,7 +23,9 @@ class SaveNewsResponse(BaseModel):
     vector_idx: int
     keywords: List[ExtractKeywordResponse]
 
-
+class RecommendationRequest(BaseModel):
+    faiss_index: int
+    recommend_count: int
 
 # 예시 기사
 title = "한국 경제 위기설, 진실은?"
@@ -58,9 +60,6 @@ sentence_list = ["한국 경제 위기설, 진실은?", "최근 한국 경제가
 
 @app.post("/api/news", response_model=SaveNewsResponse)
 def save_news(data: SaveNewsRequest):
-    # 모델이 아직 로드되지 않은 경우
-    if w2v_model is None:
-        raise HTTPException(status_code=500, detail="모델이 로드되지 않았습니다.")
 
     keywords = extract_keywords_krwordrank(data.news_title, data.news_content)
 
@@ -99,6 +98,11 @@ async def get_trending_keywords():
 
     return {"trending_keywords": trending_keywords}
 
+@app.post("/api/recommend")
+def get_recommendations(request: RecommendationRequest):
+    indices, distances = find_recommand_news_vectors(
+        request.faiss_index, request.recommend_count
+    )
 
-
-
+    print(indices)
+    return {"indices": indices }
