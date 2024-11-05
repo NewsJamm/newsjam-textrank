@@ -32,7 +32,7 @@ class NewsImageCrawlingRequest(BaseModel):
     news_url: str
 
 class NewsImageCrawlingResponse(BaseModel):
-    image_url: str
+    image_url: Optional[str]
 
 # 예시 기사
 title = "한국 경제 위기설, 진실은?"
