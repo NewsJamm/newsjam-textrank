@@ -5,6 +5,7 @@ from pytrends.request import TrendReq
 from src.word_extract_krwordrank import extract_keywords_krwordrank
 from src.word_to_vector import get_weighted_vector, model as w2v_model
 from src.model.save_vector import save_vector, find_recommand_news_vectors
+from src.image_crawling import fetch_main_image
 from typing import List, Optional
 
 app = FastAPI(title="키워드 추출 및 벡터 저장 API")
@@ -26,6 +27,12 @@ class SaveNewsResponse(BaseModel):
 class RecommendationRequest(BaseModel):
     faiss_index: int
     recommend_count: int
+
+class NewsImageCrawlingRequest(BaseModel):
+    news_url: str
+
+class NewsImageCrawlingResponse(BaseModel):
+    image_url: str
 
 # 예시 기사
 title = "한국 경제 위기설, 진실은?"
@@ -97,7 +104,6 @@ async def get_trending_keywords():
     trending_keywords = trending_searches_df[0].tolist()
 
     return {"trending_keywords": trending_keywords}
-
 @app.post("/api/recommend")
 def get_recommendations(request: RecommendationRequest):
     indices, distances = find_recommand_news_vectors(
@@ -106,3 +112,14 @@ def get_recommendations(request: RecommendationRequest):
 
     print(indices)
     return {"indices": indices }
+
+@app.post("/api/image", response_model=NewsImageCrawlingResponse)
+def crawling_image(request: NewsImageCrawlingRequest):
+    # 메인 이미지 가져오기
+    image_url = fetch_main_image(request.news_url)
+
+    response ={
+        "image_url": image_url
+    }
+
+    return response
